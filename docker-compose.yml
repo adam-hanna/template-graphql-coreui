@@ -1,0 +1,56 @@
+version: "3.7"
+
+secrets:
+  email-password:
+    file: ./docker/secrets/email-password.secret
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./server:/home/node/app
+      - /home/node/app/node_modules/
+    secrets:
+      - email-password
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8080
+      - EMAIL_PASSWORD=email-password
+      - EMAIL_USER=bcbcrocks@gmail.com
+      - PGHOST=postgres
+      - PGUSER=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres
+      - PGPORT=5432
+
+  client:
+    build: ./client
+    depends_on:
+      - server
+    links:
+      - server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/home/node/app
+      - /home/node/app/node_modules/
+    environment:
+      - REACT_APP_DEV_API_URL=http://localhost:8080
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5431:5432"
+    volumes:
+      - ./docker/volumes/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres

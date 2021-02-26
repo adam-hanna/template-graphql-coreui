@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "main": "./src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.11.0",
+    "graphql": "^15.3.0",
+    "graphql-tools": "^6.2.4",
+    "pg": "^8.5.1",
+    "postgres-migrations": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.11",
+    "@types/pg": "^7.14.10",
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.2.2"
+  },
+  "scripts": {
+    "start": "ts-node-dev --respawn --watch ./src ./src/index.ts",
+    "build": "tsc && mkdir ./dist/data && cp ./data/schema.graphql ./dist/data"
+  }
+}
