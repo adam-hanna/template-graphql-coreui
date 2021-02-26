@@ -53,11 +53,6 @@ export const login = async ({ email, password }: LoginInput): Promise<User> => {
   return ret
 }
 
-export const balanceChecks = async (userID: string): Promise<Array<BalanceCheck>> => {
-  return []
-}
-
 export const queries = {
   login,
-  balanceChecks,
 }

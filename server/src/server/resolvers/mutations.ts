@@ -48,11 +48,6 @@ export const register = async ({ email, password }: RegisterInput): Promise<User
   return ret
 }
 
-export const newBalanceCheck = async ({ userID,  requesteeEmail, balance }: NewBalanceCheckInput): Promise<BalanceCheck> => {
-  throw new Error("not implemented")
-}
-
 export const mutations = {
   register,
-  newBalanceCheck,
 }

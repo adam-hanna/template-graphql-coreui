@@ -1,12 +1,6 @@
-# ARE YOU POOR?
+# Template
 
-Poor people suck.
-
-Poor people are stupid.
-
-Don't be poor.
-
-If you are poor, this app knows.
+This is a tempalte that uses a graphQL backend, backed by a postgres db, with coreUI and react / relay on the front-end.
 
 # USAGE
 

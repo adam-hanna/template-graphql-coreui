@@ -3,27 +3,10 @@ type User {
   email: String!
 }
 
-type BalanceCheck {
-  requestor: User!
-  requesteeEmail: String!
-  balance: Float!
-  pass: Boolean
-}
-
-input NewBalanceCheckInput {
-  userID: String!
-  requesteeEmail: String!
-  balance: Float!
-}
-
 type Query {
   login(email: String!, password: String!): User!
-
-  balanceChecks(userID: String!): [BalanceCheck!]!
 }
 
 type Mutation {
   register(email: String!, password: String!): User!
-
-  newBalanceCheck(newBalanceCheckInput: NewBalanceCheckInput!): BalanceCheck!
 }
