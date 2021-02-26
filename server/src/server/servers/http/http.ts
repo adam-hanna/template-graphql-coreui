@@ -1,7 +1,7 @@
 import { createServer as createHTTPServer, Server } from 'http';
-import * as express from 'express';
+import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
-import * as cors from 'cors'
+import cors from 'cors'
 
 import { schema } from '../../../data/schema';
 import { resolvers } from '../../resolvers';
@@ -26,7 +26,7 @@ app.use(
 // setup health check
 app.use(
     '/health',
-    (req, res, next) => {
+    (_req, res, next) => {
         res.sendStatus(200);
         next();
     }

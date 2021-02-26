@@ -1,6 +1,4 @@
 import {
-  BalanceCheck,
-  NewBalanceCheckInput,
   RegisterInput,
   User,
 } from '../../data/schema'
@@ -27,7 +25,7 @@ export const register = async ({ email, password }: RegisterInput): Promise<User
 			VALUES
 				($1, crypt($2, gen_salt('bf', 10)))
 			RETURNING
-				id as userID
+				id as user_id
     `, [email, password])
 
     if (!res || !res.rows || !res.rows.length) {
@@ -35,7 +33,7 @@ export const register = async ({ email, password }: RegisterInput): Promise<User
       throw new Error("internal server error")
     }
 
-    ret.id = res.rows[0].userID
+    ret.id = res.rows[0].user_id
 
   } catch(e) {
     console.error(e)

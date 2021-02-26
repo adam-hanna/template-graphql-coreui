@@ -19,7 +19,7 @@ RUN yarn
 COPY --chown=node:node . .
 
 # 7. Expose the port
-EXPOSE 8080
+EXPOSE 3000
 
 # 8. Run the app
 CMD [ "yarn", "start" ]

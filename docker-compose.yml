@@ -1,9 +1,5 @@
 version: "3.7"
 
-secrets:
-  email-password:
-    file: ./docker/secrets/email-password.secret
-
 services:
   server:
     build: ./server
@@ -16,14 +12,10 @@ services:
     volumes:
       - ./server:/home/node/app
       - /home/node/app/node_modules/
-    secrets:
-      - email-password
     environment:
       - HOST=0.0.0.0
       - PORT=8080
-      - EMAIL_PASSWORD=email-password
-      - EMAIL_USER=bcbcrocks@gmail.com
-      - PGHOST=postgres
+      - PGHOST=db
       - PGUSER=postgres
       - PGDATABASE=postgres
       - PGPASSWORD=postgres
@@ -41,7 +33,7 @@ services:
       - ./client:/home/node/app
       - /home/node/app/node_modules/
     environment:
-      - REACT_APP_DEV_API_URL=http://localhost:8080
+      - REACT_APP_API_URL=http://localhost:8080
 
   db:
     image: postgres
@@ -54,3 +46,4 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/db-files/

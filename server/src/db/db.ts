@@ -4,6 +4,7 @@ import {
 import {
   migrate
 } from "postgres-migrations"
+import path from 'path'
 
 type dbConfigType = {
   database: string;
@@ -40,7 +41,7 @@ export default class DB {
 
     const client = await this.pool.connect()
     try {
-      await migrate({ client }, "./migrations")
+      await migrate({ client }, path.join(__dirname, "./migrations"))
     } catch(e) {
       console.error(e)
       throw e

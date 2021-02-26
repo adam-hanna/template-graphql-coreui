@@ -6,8 +6,8 @@ export const dbConfig = {
   port: Number(process.env.PGPORT) || 5432,
 }
 
-export const host = process.env.host
-export const port = process.env.port
+export const host = process.env.HOST || "localhost"
+export const port = Number(process.env.PORT || 8080)
 
 export const emailConfig = {
   username: process.env.EMAIL_USER,

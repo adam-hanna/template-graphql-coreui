@@ -17,7 +17,8 @@ import {
 import CIcon from '@coreui/icons-react'
 import graphql from 'babel-plugin-relay/macro'
 import { useRelayEnvironment } from 'react-relay/hooks'
-import { commitMutation } from 'react-relay'
+import { fetchQuery } from 'relay-runtime'
+import { useHistory } from 'react-router-dom'
 
 import { UserContext } from '../../../contexts/user'
 import { LoginQueryResponse } from './__generated__/LoginQuery.graphql'
@@ -37,37 +38,39 @@ const loginQuery = graphql`
 const Login = () => {
   const environment = useRelayEnvironment()
   const user = useContext(UserContext)
+  const history = useHistory()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const login = ({ email, password }: { email: string; password: string; }) => {
+  const login = async ({ email, password }: { email: string; password: string; }) => {
     const variables = {
       email,
       password,
     }
 
-    commitMutation(
-      environment,
-      {
-        mutation: loginQuery,
+    try {
+      const data = await fetchQuery(
+        environment,
+        loginQuery,
         variables,
-        onCompleted: (response, errors) => {
-          if (errors) {
-            console.error(errors)
-            return
-          }
+      )
 
-          if ((response as LoginQueryResponse) && (response as LoginQueryResponse).login) {
-            user?.setUser({
-              id: (response as LoginQueryResponse).login.id,
-              email: (response as LoginQueryResponse).login.email,
-            })
-          }
-        },
-        onError: err => console.error(err),
-      },
-    );
+      if ((data as LoginQueryResponse) && (data as LoginQueryResponse).login) {
+        const {
+          id,
+          email,
+        } = (data as LoginQueryResponse).login
+
+        user?.setUser({
+          id,
+          email,
+        })
+        history.push("/")
+      }
+    } catch(e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -120,7 +123,6 @@ const Login = () => {
                           className="px-4"
                           disabled={email === '' || password === ''}
                           onClick={() => {
-                            console.log("logging in")
                             login({ email, password })
                           }}
                         >

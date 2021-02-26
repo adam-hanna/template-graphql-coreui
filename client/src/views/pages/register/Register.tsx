@@ -18,6 +18,7 @@ import CIcon from '@coreui/icons-react'
 import graphql from 'babel-plugin-relay/macro'
 import { useRelayEnvironment } from 'react-relay/hooks'
 import { commitMutation } from 'react-relay'
+import { useHistory } from 'react-router-dom'
 
 import { UserContext } from '../../../contexts/user'
 import { RegisterMutationResponse } from './__generated__/RegisterMutation.graphql'
@@ -37,6 +38,7 @@ const registerMutation = graphql`
 const Register = () => {
   const environment = useRelayEnvironment()
   const user = useContext(UserContext)
+  const history = useHistory()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -68,10 +70,16 @@ const Register = () => {
           }
 
           if ((response as RegisterMutationResponse) && (response as RegisterMutationResponse).register) {
+            const {
+              id,
+              email,
+            } = (response as RegisterMutationResponse).register
+
             user?.setUser({
-              id: (response as RegisterMutationResponse).register.id,
-              email: (response as RegisterMutationResponse).register.email,
+              id,
+              email,
             })
+            history.push("/")
           }
         },
         onError: err => console.error(err),
@@ -146,7 +154,6 @@ const Register = () => {
                     block
                     disabled={email === '' || password === '' || password2 === '' || !isValid(password, password2)}
                     onClick={() => {
-                      console.log("submitting")
                       register({ email, password })
                     }}
                   >

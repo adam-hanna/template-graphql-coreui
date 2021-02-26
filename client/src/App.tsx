@@ -7,7 +7,7 @@ import './scss/style.scss';
 // @ts-ignore
 function PrivateRoute({ component, authorized, ...rest }) {
   let c =
-    authorized() === true ? (
+    authorized() ? (
       <Route component={component} {...rest} />
     ) : (
       <Redirect {...rest} to="/login" />
@@ -44,7 +44,7 @@ const App = () => {
             <Route exact path="/500" name="Page 500" render={(props: any) => <Page500 {...props}/>} />
             <PrivateRoute
               authorized={() => {
-                return user && user.id;
+                return !!user?.id;
               }}
               path="/"
               name="Home"

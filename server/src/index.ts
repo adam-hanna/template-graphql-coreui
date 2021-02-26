@@ -9,7 +9,7 @@ import { GraphQLServer } from './server'
 import DB from './db'
 
 const server = new GraphQLServer({
-    httpPort: Number(port),
+    httpPort: port,
     httpHost: host,
 })
 

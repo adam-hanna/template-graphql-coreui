@@ -1,5 +1,4 @@
 import {
-  BalanceCheck,
   LoginInput,
   User,
 } from '../../data/schema'

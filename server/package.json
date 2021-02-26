@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "./src/index.ts",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
